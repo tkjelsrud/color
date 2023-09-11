@@ -59,7 +59,7 @@
           let look = Color.getNameFromHex(cCol);
           let name = (look ? look : cCol);
           
-          dCol.innerHTML = "<div style=\"background-color:" + cCol + "\">&nbsp;</div><div>" + name + "</div>";
+          dCol.innerHTML = "<div style=\"background-color:" + cCol + "\" onClick="navigator.clipboard.writeText('" + cCol + ');">&nbsp;</div><div>" + name + "</div>";
           plDiv.appendChild(dCol);
         }
         
