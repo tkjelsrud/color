@@ -4,16 +4,21 @@
     <script type="text/javascript" src="https://tkjelsrud.github.io/lib/memory.js"></script>
     <script type="text/javascript" src="https://tkjelsrud.github.io/lib/color.js"></script>
 
-
+    <style>
+      .palette {
+        float: left;
+        border: 1px solid grey;
+      }
+    </style>
   </head>
   <body>
-   <div id="palettes">&bsnp;</div>
+   <div id="palettes">&nbsp;</div>
     
     <script type="text/javascript">
       // Do things
       const m = new Memory();
       m.loadAllNodes();
-      //console.log(m);
+      
       for(let key in m.nodes) {
         n = m.nodes[key];
         
