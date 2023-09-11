@@ -52,7 +52,10 @@
           let cCol = n.cList[i];
           let dCol = document.createElement('div');
           dCol.classList.add("color");
-          dCol.innerHTML = "<div style=\"background-color:" + cCol + "\">&nbsp;</div><div>" + cCol + "</div>";
+          let look = Color.getNameFromHex(cCol);
+          let name = (look ? look : cCol);
+          
+          dCol.innerHTML = "<div style=\"background-color:" + cCol + "\">&nbsp;</div><div>" + name + "</div>";
           plDiv.appendChild(dCol);
         }
         
