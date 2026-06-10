@@ -1,0 +1,7 @@
+{
+  "name": "@tkjelsrud/color",
+  "version": "0.1.0",
+  "description": "Curated color palettes for creative tools",
+  "main": "index.js",
+  "license": "MIT"
+}

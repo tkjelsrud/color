@@ -1,0 +1,121 @@
+{
+  "palettes": [
+    {
+      "id": "gallery-soft",
+      "name": "Gallery Soft",
+      "family": "custom",
+      "paper": "#f2efe8",
+      "ink": "#222222",
+      "fills": ["#7b9acc", "#c9a66b", "#8dc7b5", "#d77a61", "#9d79bc"],
+      "tags": ["soft", "gallery"]
+    },
+    {
+      "id": "signal",
+      "name": "Signal",
+      "family": "custom",
+      "paper": "#f5f1ea",
+      "ink": "#161616",
+      "fills": ["#ff6b6b", "#ffd93d", "#4ecdc4", "#1a73e8", "#6f2dbd"],
+      "tags": ["bright", "poster"]
+    },
+    {
+      "id": "blueprint-pop",
+      "name": "Blueprint Pop",
+      "family": "custom",
+      "paper": "#edf4ff",
+      "ink": "#172033",
+      "fills": ["#00a6fb", "#0582ca", "#f45b69", "#ffd166", "#06d6a0"],
+      "tags": ["technical", "bright"]
+    },
+    {
+      "id": "dark-panel",
+      "name": "Dark Panel",
+      "family": "custom",
+      "paper": "#111111",
+      "ink": "#f5f5f5",
+      "fills": ["#ff9f1c", "#2ec4b6", "#e71d36", "#7b2cbf", "#3a86ff"],
+      "tags": ["dark", "poster"]
+    },
+    {
+      "id": "nordic-light",
+      "name": "Nordic Light",
+      "family": "custom",
+      "paper": "#f7f7f2",
+      "ink": "#0f1720",
+      "fills": ["#58a4b0", "#a9bcd0", "#d8dbe2", "#f4a261", "#e76f51"],
+      "tags": ["light", "calm"]
+    },
+    {
+      "id": "riso-core",
+      "name": "Riso Core",
+      "family": "riso",
+      "paper": "#f7f3ea",
+      "ink": "#000000",
+      "fills": ["#0078BF", "#FF6C2F", "#FFE800", "#00A95C", "#765BA7"],
+      "tags": ["standard"]
+    },
+    {
+      "id": "riso-fluoro",
+      "name": "Riso Fluoro",
+      "family": "riso",
+      "paper": "#f7f3ea",
+      "ink": "#000000",
+      "fills": ["#FF48B0", "#FF7477", "#F7FF00", "#44D62C", "#3255A4"],
+      "tags": ["fluoro"]
+    },
+    {
+      "id": "riso-seafoam",
+      "name": "Riso Seafoam",
+      "family": "riso",
+      "paper": "#f7f3ea",
+      "ink": "#435060",
+      "fills": ["#62C2B1", "#2F6F65", "#62A8E5", "#B8C7C4", "#F2CDCF"],
+      "tags": ["soft", "coastal"]
+    },
+    {
+      "id": "riso-autumn-tech",
+      "name": "Riso Autumn Tech",
+      "family": "riso",
+      "paper": "#f7f3ea",
+      "ink": "#000000",
+      "fills": ["#BA8032", "#B49F29", "#EE7F4B", "#375E77", "#6C5D80"],
+      "tags": ["warm", "technical"]
+    },
+    {
+      "id": "riso-lake",
+      "name": "Riso Lake",
+      "family": "riso",
+      "paper": "#f7f3ea",
+      "ink": "#435060",
+      "fills": ["#235BA8", "#62A8E5", "#009DA5", "#62C2B1", "#B8C7C4"],
+      "tags": ["blue", "cool"]
+    },
+    {
+      "id": "riso-forest-notebook",
+      "name": "Riso Forest Notebook",
+      "family": "riso",
+      "paper": "#f7f3ea",
+      "ink": "#435060",
+      "fills": ["#516E5A", "#407060", "#68724D", "#BB8B41", "#A5AAA8"],
+      "tags": ["earthy", "muted"]
+    },
+    {
+      "id": "pantone-inspired-drift",
+      "name": "Pantone Drift",
+      "family": "pantone-inspired",
+      "paper": "#f6f2ea",
+      "ink": "#1e2430",
+      "fills": ["#7BA0C0", "#D0A09A", "#D7C3A7", "#7D8F74", "#6E6A78"],
+      "tags": ["soft", "studio"]
+    },
+    {
+      "id": "pantone-inspired-pulse",
+      "name": "Pantone Pulse",
+      "family": "pantone-inspired",
+      "paper": "#f5f1e8",
+      "ink": "#202020",
+      "fills": ["#F05D5E", "#F3AE4E", "#4D8FAC", "#6B8E6E", "#A06AA1"],
+      "tags": ["bold", "poster"]
+    }
+  ]
+}
