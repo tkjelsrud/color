@@ -30,6 +30,28 @@
         box-sizing: border-box;
       }
 
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 10px 0 12px;
+      }
+
+      button {
+        appearance: none;
+        border: 1px solid #c8c2b8;
+        background: #faf8f4;
+        color: #222;
+        font: inherit;
+        font-size: 12px;
+        padding: 6px 8px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #f0ece4;
+      }
+
       .palette-title {
         font-weight: bold;
       }
@@ -50,6 +72,7 @@
         width: 100%;
         height: 36px;
         border: 1px solid rgba(0, 0, 0, 0.12);
+        cursor: pointer;
       }
 
       .token {
@@ -57,17 +80,213 @@
         font-size: 12px;
         margin-bottom: 4px;
       }
+
+      .status {
+        position: sticky;
+        top: 0;
+        margin-bottom: 16px;
+        padding: 10px 12px;
+        border: 1px solid #d5d0c8;
+        background: #fffdf8;
+        font-size: 13px;
+      }
+
+      .hint {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 12px;
+      }
+
+      .editor {
+        margin-bottom: 24px;
+        padding: 12px;
+        border: 1px solid #d5d0c8;
+        background: #fff;
+      }
+
+      .editor h2 {
+        margin-top: 0;
+      }
+
+      .editor textarea {
+        width: 100%;
+        min-height: 260px;
+        box-sizing: border-box;
+        padding: 10px;
+        border: 1px solid #d5d0c8;
+        font: 12px/1.5 monospace;
+        resize: vertical;
+      }
+
+      .editor textarea.invalid {
+        border-color: #c23b22;
+        background: #fff7f5;
+      }
+
+      .validation {
+        min-height: 18px;
+        margin-top: 10px;
+        font-size: 12px;
+        color: #666;
+      }
+
+      .validation.error {
+        color: #c23b22;
+      }
+
+      .page-toolbar {
+        margin-bottom: 16px;
+      }
     </style>
   </head>
   <body>
     <h1>Color</h1>
+    <div class="status" id="status">Read-only palette browser. Copy values here, then edit the JSON in the repo.</div>
+    <div class="toolbar page-toolbar">
+      <button type="button" id="copy-all-palettes">Copy all palettes JSON</button>
+    </div>
+    <section class="editor">
+      <h2>Draft Editor</h2>
+      <div class="hint">Static editor only: edit a palette draft here, then copy or download the JSON and paste it into `palettes/sketch-palettes.json` in the repo.</div>
+      <div class="toolbar">
+        <button type="button" id="new-draft">New draft</button>
+        <button type="button" id="copy-draft">Copy draft JSON</button>
+        <button type="button" id="download-draft">Download draft JSON</button>
+        <button type="button" id="format-draft">Format draft</button>
+      </div>
+      <textarea id="draft" spellcheck="false"></textarea>
+      <div class="validation" id="draft-validation"></div>
+    </section>
     <div id="app">Loading palettes...</div>
 
     <script>
+      const emptyDraft = {
+        id: 'new-palette',
+        name: 'New Palette',
+        family: 'custom',
+        paper: '#f5f1ea',
+        ink: '#222222',
+        fills: ['#7b9acc', '#c9a66b', '#8dc7b5', '#d77a61', '#9d79bc'],
+        tags: [],
+      };
+
+      let allPalettes = [];
+
+      async function copyText(value, label) {
+        await navigator.clipboard.writeText(value);
+        setStatus(`${label} copied to clipboard.`);
+      }
+
+      function setStatus(message) {
+        document.getElementById('status').textContent = message;
+      }
+
+      function createButton(label, onClick) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = label;
+        button.addEventListener('click', onClick);
+        return button;
+      }
+
+      function getDraftField() {
+        return document.getElementById('draft');
+      }
+
+      function getValidationField() {
+        return document.getElementById('draft-validation');
+      }
+
+      function setDraftValidation(message, isError) {
+        const field = getValidationField();
+        field.textContent = message;
+        field.className = isError ? 'validation error' : 'validation';
+        getDraftField().classList.toggle('invalid', Boolean(isError));
+      }
+
+      function validatePaletteDraft(value) {
+        if (!value || Array.isArray(value) || typeof value !== 'object') {
+          throw new Error('Draft must be a JSON object.');
+        }
+        if (!value.id || typeof value.id !== 'string') {
+          throw new Error('Draft needs a string "id".');
+        }
+        if (!value.name || typeof value.name !== 'string') {
+          throw new Error('Draft needs a string "name".');
+        }
+        if (!Array.isArray(value.fills) || !value.fills.length) {
+          throw new Error('Draft needs a non-empty "fills" array.');
+        }
+      }
+
+      function setDraft(value, label) {
+        getDraftField().value = JSON.stringify(value, null, 2);
+        setDraftValidation('Draft JSON looks valid.', false);
+        setStatus(`${label} loaded into draft editor.`);
+      }
+
+      function parseDraft() {
+        const parsed = JSON.parse(getDraftField().value);
+        validatePaletteDraft(parsed);
+        return parsed;
+      }
+
+      function formatDraft() {
+        const parsed = parseDraft();
+        getDraftField().value = JSON.stringify(parsed, null, 2);
+        setDraftValidation('Draft JSON looks valid.', false);
+        setStatus('Draft JSON formatted.');
+      }
+
+      function validateDraftInput() {
+        try {
+          parseDraft();
+          setDraftValidation('Draft JSON looks valid.', false);
+        } catch (error) {
+          setDraftValidation(error.message, true);
+        }
+      }
+
+      function downloadDraft() {
+        const parsed = parseDraft();
+        const blob = new Blob([JSON.stringify(parsed, null, 2) + '\n'], { type: 'application/json' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `${parsed.id || 'palette-draft'}.json`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+        setStatus('Draft JSON downloaded.');
+      }
+
+      function bindEditorActions() {
+        document.getElementById('new-draft').addEventListener('click', () => setDraft(emptyDraft, 'New draft'));
+        document.getElementById('copy-all-palettes').addEventListener('click', async () => {
+          await copyText(JSON.stringify({ palettes: allPalettes }, null, 2), 'All palettes JSON');
+        });
+        document.getElementById('copy-draft').addEventListener('click', async () => {
+          formatDraft();
+          await copyText(getDraftField().value, 'Draft JSON');
+        });
+        document.getElementById('download-draft').addEventListener('click', () => {
+          formatDraft();
+          downloadDraft();
+        });
+        document.getElementById('format-draft').addEventListener('click', () => {
+          formatDraft();
+        });
+        getDraftField().addEventListener('input', () => {
+          validateDraftInput();
+        });
+      }
+
       async function start() {
+        bindEditorActions();
+        setDraft(emptyDraft, 'New draft');
+
         const response = await fetch('./palettes/sketch-palettes.json');
         const data = await response.json();
         const palettes = data.palettes || [];
+        allPalettes = palettes;
         const families = [...new Set(palettes.map((palette) => palette.family || 'custom'))];
         const app = document.getElementById('app');
         app.innerHTML = '';
@@ -79,6 +298,11 @@
           const title = document.createElement('h2');
           title.textContent = family;
           section.appendChild(title);
+
+          const hint = document.createElement('div');
+          hint.className = 'hint';
+          hint.textContent = 'Click a swatch to copy its hex value. Use the buttons to copy fills or full palette JSON.';
+          section.appendChild(hint);
 
           const grid = document.createElement('div');
           grid.className = 'family-grid';
@@ -97,14 +321,25 @@
             meta.textContent = `${palette.fills.length} fills`;
             card.appendChild(meta);
 
+            const toolbar = document.createElement('div');
+            toolbar.className = 'toolbar';
+            toolbar.appendChild(createButton('Edit draft', () => setDraft(palette, palette.name)));
+            toolbar.appendChild(createButton('Copy fills', () => copyText(JSON.stringify(palette.fills), `${palette.name} fills`)));
+            toolbar.appendChild(createButton('Copy JSON', () => copyText(JSON.stringify(palette, null, 2), `${palette.name} JSON`)));
+            card.appendChild(toolbar);
+
             const ink = document.createElement('div');
             ink.className = 'token';
             ink.textContent = `ink ${palette.ink}`;
+            ink.title = 'Click to copy';
+            ink.addEventListener('click', () => copyText(palette.ink, `${palette.name} ink`));
             card.appendChild(ink);
 
             const paper = document.createElement('div');
             paper.className = 'token';
             paper.textContent = `paper ${palette.paper}`;
+            paper.title = 'Click to copy';
+            paper.addEventListener('click', () => copyText(palette.paper, `${palette.name} paper`));
             card.appendChild(paper);
 
             const row = document.createElement('div');
@@ -112,8 +347,9 @@
             palette.fills.forEach((color) => {
               const swatch = document.createElement('div');
               swatch.className = 'swatch';
-              swatch.title = color;
+              swatch.title = `${color} (click to copy)`;
               swatch.style.background = color;
+              swatch.addEventListener('click', () => copyText(color, `${palette.name} color ${color}`));
               row.appendChild(swatch);
             });
             card.appendChild(row);
