@@ -154,6 +154,15 @@
       "tags": ["ega", "sierra", "retro", "8bit"]
     },
     {
+      "id": "lofi-badger-studio",
+      "name": "Badger Studio",
+      "family": "lofi",
+      "paper": "#e8e6e2",
+      "ink": "#0d0a0a",
+      "fills": ["#2d0f0c", "#5c2218", "#d4d2ce", "#e8a02a", "#1a1212"],
+      "tags": ["earthy", "dark", "warm", "studio"]
+    },
+    {
       "id": "lofi-bladerunner",
       "name": "Blade Runner",
       "family": "lofi",
