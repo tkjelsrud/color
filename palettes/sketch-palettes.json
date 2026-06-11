@@ -116,6 +116,42 @@
       "ink": "#202020",
       "fills": ["#F05D5E", "#F3AE4E", "#4D8FAC", "#6B8E6E", "#A06AA1"],
       "tags": ["bold", "poster"]
+    },
+    {
+      "id": "lofi-high-contrast-bw",
+      "name": "High Contrast BW",
+      "family": "lofi",
+      "paper": "#f8f8f6",
+      "ink": "#0a0a0a",
+      "fills": ["#ffffff", "#1a1a1a", "#555555", "#a0a0a0", "#d4d0cb", "#8a8278"],
+      "tags": ["monochrome", "high-contrast", "minimal"]
+    },
+    {
+      "id": "lofi-scifi-dashboard",
+      "name": "Sci-Fi Dashboard",
+      "family": "lofi",
+      "paper": "#000000",
+      "ink": "#ff9900",
+      "fills": ["#ff9900", "#ffcc00", "#ff6600", "#cc3333", "#4455cc", "#9944cc", "#ffffff"],
+      "tags": ["lcars", "star-trek", "dark", "sci-fi"]
+    },
+    {
+      "id": "lofi-sierra-ega",
+      "name": "Sierra EGA",
+      "family": "lofi",
+      "paper": "#000000",
+      "ink": "#aaaaaa",
+      "fills": ["#0000aa", "#00aaaa", "#aa0000", "#aa5500", "#ffff55", "#5555ff", "#55ff55", "#ff5555"],
+      "tags": ["ega", "sierra", "retro", "8bit"]
+    },
+    {
+      "id": "lofi-bladerunner",
+      "name": "Blade Runner",
+      "family": "lofi",
+      "paper": "#060a10",
+      "ink": "#a8b8c0",
+      "fills": ["#0f1e30", "#1a3a5c", "#3a6080", "#8ab0c8", "#c03030", "#7a2828", "#3a3844"],
+      "tags": ["dark", "noir", "cyberpunk", "blue", "dystopian"]
     }
   ]
 }
