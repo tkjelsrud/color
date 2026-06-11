@@ -46,6 +46,15 @@
       "tags": ["light", "calm"]
     },
     {
+      "id": "riso-print",
+      "name": "Riso Print",
+      "family": "riso",
+      "paper": "#f7f3ea",
+      "ink": "#000000",
+      "fills": ["#0078BF", "#FF665E", "#00838A", "#5EC8E5", "#FF48B0", "#9D7AD2", "#FF7477", "#FFE800", "#FF6C2F", "#925F52", "#00A95C", "#BB8B41"],
+      "tags": ["full-set", "print"]
+    },
+    {
       "id": "riso-core",
       "name": "Riso Core",
       "family": "riso",
